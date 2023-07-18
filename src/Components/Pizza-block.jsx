@@ -1,37 +1,43 @@
 import React from "react";
 
 function PizzaBlock(props) {
-  const [count, setCount] = React.useState(0);
+  const [activeType, setActivTape] = React.useState(0);
+  const [activeSize, setActiveSize] = React.useState(0);
 
-  function oneClickButton() {
-    setCount(count + 1);
-  }
-
+  const arrTypes = ["тонкое", "традиционное"];
   return (
     <div class="pizza-block">
-      <img
-        class="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-        alt="Pizza"
-      />
+      <img class="pizza-block__image" src={props.imageUrl} alt="Pizza" />
       <h4 class="pizza-block__title">{props.title}</h4>
       <div class="pizza-block__selector">
         <ul>
-          <li class="active">тонкое</li>
-          <li>традиционное</li>
+          {props.types.map((typeId) => (
+            <li
+              onClick={() => {
+                setActivTape(typeId);
+              }}
+              className={activeType === typeId ? "active" : ""}
+            >
+              {arrTypes[typeId]}
+            </li>
+          ))}
         </ul>
         <ul>
-          <li class="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {props.sizes.map((siz, i) => (
+            <li
+              onClick={() => {
+                setActiveSize(i);
+              }}
+              className={activeSize === i ? "active" : ""}
+            >
+              {siz}
+            </li>
+          ))}
         </ul>
       </div>
       <div class="pizza-block__bottom">
         <div class="pizza-block__price">от {props.price} ₽</div>
-        <div
-          onClick={() => oneClickButton()}
-          class="button button--outline button--add"
-        >
+        <div class="button button--outline button--add">
           <svg
             width="12"
             height="12"
@@ -45,7 +51,7 @@ function PizzaBlock(props) {
             ></path>
           </svg>
           <span>Добавить</span>
-          <i>{count}</i>
+          <i>0</i>
         </div>
       </div>
     </div>
