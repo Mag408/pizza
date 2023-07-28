@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import Categories from "../Components/Categories";
 import Sort from "../Components/Sort";
@@ -11,19 +12,19 @@ function Home() {
   const [items, setItems] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [isPizzasLoading, setIsPizzasLoading] = React.useState(true);
-  const [categoriId, setcategoriId] = React.useState(0);
   const { searcValue } = React.useContext(SearchContext);
-  const [SortId, setSortId] = React.useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
+
+  const CategoryId = useSelector((state) => state.filter.CategoryId);
+  const SortValue = useSelector((state) => state.filter.SortValue);
+
+  console.log(SortValue);
 
   React.useEffect(() => {
     setIsPizzasLoading(true);
     fetch(
       `https://64199f38c152063412c74678.mockapi.io/cart?page=${currentPage}&limit=4  &${
-        categoriId > 0 ? `category=${categoriId}` : ""
-      }&sortBy=${SortId.sortProperty}&order=${SortId.sortOrder}&search=${
+        CategoryId > 0 ? `category=${CategoryId}` : ""
+      }&sortBy=${SortValue.sortProperty}&order=${SortValue.sortOrder}&search=${
         searcValue ? searcValue : ""
       }`
     )
@@ -35,23 +36,13 @@ function Home() {
         setIsPizzasLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoriId, SortId, searcValue, currentPage]);
+  }, [CategoryId, SortValue, searcValue, currentPage]);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          value={categoriId}
-          onClickCategori={(i) => {
-            setcategoriId(i);
-          }}
-        />
-        <Sort
-          value={SortId}
-          onChangeSort={(i) => {
-            setSortId(i);
-          }}
-        />
+        <Categories />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

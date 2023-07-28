@@ -2,19 +2,19 @@ import "./App.css";
 import "./scss/app.scss";
 import { Route, Routes } from "react-router-dom";
 import React from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import { decrement, increment } from "./redux/slices/filterSlice";
 
 import Header from "./Components/Header";
 import Home from "./Pages/Home";
 import NoutFound from "./Pages/NotFound";
 import Cart from "./Pages/Cart";
 
+// import { useSelector, useDispatch } from "react-redux";
+// import { decrement, increment } from "./redux/slices/filterSlice";
+
 export const SearchContext = React.createContext("");
 
 function App() {
   const [searcValue, setSerchValue] = React.useState("");
-
   // const count = useSelector((state) => state.counter.value);
   // const dispatch = useDispatch();
 
