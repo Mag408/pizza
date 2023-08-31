@@ -1,23 +1,45 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { onChangeSort } from "../redux/slices/filterSlice";
+import { onChangeSort, selectSort } from "../redux/slices/filterSlice";
 
-function Sort() {
+export type SortList = {
+  name: string;
+  sortProperty: "rating" | "title" | "price";
+  sortOrder: "desc" | "asc";
+};
+
+export const sortList: SortList[] = [
+  { name: "популярности", sortProperty: "rating", sortOrder: "desc" },
+  { name: "цена по убываню", sortProperty: "price", sortOrder: "desc" },
+  { name: "цена по возрастанию", sortProperty: "price", sortOrder: "asc" },
+  { name: "алфавиту", sortProperty: "title", sortOrder: "asc" },
+];
+
+const Sort: React.FC = () => {
   const [open, setOpen] = React.useState(false);
-  const sortValue = [
-    { name: "популярности", sortProperty: "rating", sortOrder: "desc" },
-    { name: "цена по убываню", sortProperty: "price", sortOrder: "desc" },
-    { name: "цена по возрастанию", sortProperty: "price", sortOrder: "asc" },
-    { name: "алфавиту", sortProperty: "title", sortOrder: "asc" },
-  ];
 
-  const SortValue = useSelector((state) => state.filter.SortValue);
+  const SortValue = useSelector(selectSort);
   const dispatch = useDispatch();
 
+  const sortRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handlClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+
+    document.body.addEventListener("click", handlClickOutside);
+
+    return () => document.body.removeEventListener("click", handlClickOutside);
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
+          className={!open ? "svg-rotate" : ""}
           onClick={() => setOpen(!open)}
           width="10"
           height="6"
@@ -36,7 +58,7 @@ function Sort() {
       {open && (
         <div className="sort__popup">
           <ul>
-            {sortValue.map((obj, i) => (
+            {sortList.map((obj, i) => (
               <li
                 key={i}
                 onClick={() => {
@@ -52,6 +74,6 @@ function Sort() {
       )}
     </div>
   );
-}
+};
 
 export default Sort;

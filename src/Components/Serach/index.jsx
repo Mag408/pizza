@@ -1,18 +1,31 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { onChangeSearch } from "../../redux/slices/filterSlice";
+import debounce from "lodash.debounce";
 
 import styles from "./Search.module.scss";
-import { SearchContext } from "../../App";
 
 function Serch() {
-  const { searcValue, setSerchValue } = React.useContext(SearchContext);
+  const dispatch = useDispatch();
+  const [searchValue, setSearchValue] = React.useState("");
+
+  const onChangeSearchDebonce = React.useCallback(
+    debounce((str) => {
+      dispatch(onChangeSearch(str));
+    }, 500),
+    []
+  );
+  const onChangeSearchState = (event) => {
+    setSearchValue(event.target.value);
+    onChangeSearchDebonce(event.target.value);
+  };
+
   return (
     <input
-      value={searcValue}
+      value={searchValue}
       className={styles.root}
       placeholder="Поиск пиццы..."
-      onChange={(event) => {
-        setSerchValue(event.target.value);
-      }}
+      onChange={onChangeSearchState}
     />
   );
 }

@@ -2,10 +2,11 @@ import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { onChangeCategory } from "../redux/slices/filterSlice";
+import { RootState } from "../redux/store";
 
-function Categories() {
+const Categories = () => {
   const categories = ["Все", "Мясные", "Вегатианские", "Гриль", "Острые"];
-  const CategoryId = useSelector((state) => state.filter.CategoryId);
+  const CategoryId = useSelector((state: RootState) => state.filter.CategoryId);
   const dispatch = useDispatch();
   return (
     <div className="categories">
@@ -22,6 +23,6 @@ function Categories() {
       </ul>
     </div>
   );
-}
+};
 
 export default Categories;
