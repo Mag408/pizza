@@ -1,18 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-
-export type Sort = {
-  name: string;
-  sortProperty: "rating" | "title" | "price";
-  sortOrder: "desc" | "asc";
-};
-
-export interface FilterSliceState {
-  CategoryId: number;
-  SortValue: Sort;
-  SearchValue: string;
-  PageValue: number;
-}
+import { FilterSliceState, Sort } from "./types";
 
 const initialState: FilterSliceState = {
   CategoryId: 0,
@@ -24,7 +11,6 @@ const initialState: FilterSliceState = {
   SearchValue: "",
   PageValue: 1,
 };
-
 export const counterSlice = createSlice({
   name: "filter",
   initialState,
@@ -48,9 +34,6 @@ export const counterSlice = createSlice({
     },
   },
 });
-
-export const selectSort = (state: RootState) => state.filter.SortValue;
-export const selectFilter = (state: RootState) => state.filter;
 
 export const {
   onChangeCategory,

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
@@ -8,12 +8,12 @@ import Sort, { sortList } from "../Components/Sort";
 import PizzaBlock from "../Components/PizzaBlock/index";
 import Skeleton from "../Components/PizzaBlock/Skeleton";
 import Pagination from "../Components/Pagination";
-import filterSlice, {
-  selectFilter,
-  setFilter,
-} from "../redux/slices/filterSlice";
-import { fetchPizzas, selectPizza } from "../redux/slices/pizzasSlice";
+
 import { useAppDispatch } from "../redux/store";
+import { selectFilter } from "../redux/filter/selector";
+import { setFilter } from "../redux/filter/slice";
+import { selectPizza } from "../redux/pizzas/selector";
+import { fetchPizzas } from "../redux/pizzas/asyncAction";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const Home = () => {
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      console.log(params);
+
       const SortValue = sortList.find(
         (obj) => obj.sortProperty === params.sortProperty
       );
@@ -78,8 +78,8 @@ const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories CategoryId={CategoryId} />
+        <Sort SortValue={SortValue} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (

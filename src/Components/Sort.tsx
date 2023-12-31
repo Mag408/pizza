@@ -1,6 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { onChangeSort, selectSort } from "../redux/slices/filterSlice";
+import { useDispatch } from "react-redux";
+import { onChangeSort } from "../redux/filter/slice";
+
+type SortProps = {
+  SortValue: SortList;
+};
 
 export type SortList = {
   name: string;
@@ -15,10 +19,9 @@ export const sortList: SortList[] = [
   { name: "алфавиту", sortProperty: "title", sortOrder: "asc" },
 ];
 
-const Sort: React.FC = () => {
+const Sort: React.FC<SortProps> = React.memo(({ SortValue }) => {
   const [open, setOpen] = React.useState(false);
 
-  const SortValue = useSelector(selectSort);
   const dispatch = useDispatch();
 
   const sortRef = React.useRef<HTMLDivElement>(null);
@@ -74,6 +77,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

@@ -1,13 +1,12 @@
 import React from "react";
 import Paginate from "react-paginate";
-import { useDispatch, useSelector } from "react-redux";
-import { onChangePage } from "../../redux/slices/filterSlice";
+import { useDispatch } from "react-redux";
 
 import stales from "./Pagination.module.scss";
-import { RootState } from "../../redux/store";
+
+import { onChangePage } from "../../redux/filter/slice";
 
 const Pagination = () => {
-  const PageValue = useSelector((state: RootState) => state.filter.PageValue);
   const dispatch = useDispatch();
 
   return (

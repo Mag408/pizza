@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, reduceItem, removeItem } from "../redux/slices/cartSlice";
+import { addItem, reduceItem, removeItem } from "../redux/cart/slice";
 
 type PizzaCartProps = {
   id: string;
