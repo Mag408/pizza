@@ -21,12 +21,14 @@ function Serch() {
   };
 
   return (
-    <input
-      value={searchValue}
-      className={styles.root}
-      placeholder="Поиск пиццы..."
-      onChange={onChangeSearchState}
-    />
+    <div className={styles.root}>
+      <input
+        value={searchValue}
+        className={styles.searchInput}
+        placeholder="Поиск пиццы..."
+        onChange={onChangeSearchState}
+      />
+    </div>
   );
 }
 
